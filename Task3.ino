@@ -1,4 +1,5 @@
 int key[10] = {911 , 730 , 719 ,708 , 761 , 773 ,786 , 852 ,837 , 822}; 
+int key2[10] = {964 , 798 , 681 ,594 , 527 , 1002 ,824 , 700 ,608 , 583}; 
 unsigned long int Data[2][11][10] = { //0 numeric , 1 emotions
 								{
                                      {252, 132 ,132, 132 ,132 ,132 ,132 , 132 , 132 , 252},//0
@@ -41,13 +42,14 @@ void setup() {
   // put your setup code here, to run once:
    for(int i =0 ;i<14 ;i++)pinMode(i ,OUTPUT);
    pinMode(A0 , INPUT);
+   pinMode(A1 , INPUT);
   Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:   
       
-   
+     //Serial.println(analogRead(A1));
 	  digitalWrite(8 ,1 );
 	  digitalWrite(9 ,1);
     
@@ -93,7 +95,7 @@ void setCurrentShap(){
  //int b = 10;
  for(int i = 0 ; i<10 ;i++) 
  {
-	if(a == key[i]){
+	if(a == key2[i]){
 	 currentShap = i;
 	 updateLast(i);
 	}
