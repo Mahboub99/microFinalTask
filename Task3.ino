@@ -31,11 +31,12 @@ int currentShap = 10;
 int prevShap = 10;
 int password[4] ={1 ,2 ,3 ,4};
 int lastFour[4]={10 ,10 ,10 ,10};
+int lastEight[8] = {10 , 10 , 10 , 10 , 10 ,10 ,10 ,10};
 int changePassword[4] ={1 ,2 ,1 ,2};
-
 int keyPressed = 10;
 int cnt = 0;
 int displayMode = 0; 
+
 void setup() {
   // put your setup code here, to run once:
    for(int i =0 ;i<14 ;i++)pinMode(i ,OUTPUT);
@@ -50,12 +51,8 @@ void loop() {
 	  digitalWrite(8 ,1 );
 	  digitalWrite(9 ,1);
     
-      //if(millis()<2000)welcomeMode();
+      if(millis()<2000)welcomeMode();
       setCurrentShap();
-	 
-	  
-	
-	 
 	  Mode(displayMode);
 	  
     
@@ -98,7 +95,7 @@ void setCurrentShap(){
  {
 	if(a == key[i]){
 	 currentShap = i;
-	 updateLastFour(i);
+	 updateLast(i);
 	}
 	   
  }
@@ -118,17 +115,18 @@ void Mode(int displayMode){
 	 
 	}
 	 setCurrentShap();
-	 handlePassword();
+	 handleSwitch();
+	 handleChangePassword();
    }
  }
 }
-void handlePassword(){
+void handleSwitch(){
 
 
-	for(int i = 0 ;i< 4 ;i++) {
-	 Serial.print(lastFour[i]);
+	/*for(int i = 0 ;i< 8 ;i++) {
+	 Serial.print(lastEight[i]);
 	}
-	 Serial.println();
+	 Serial.println();*/
 	 bool ok = 0;
 	 for(int i = 0 ;i<4 ;i++){
 	  if(password[i]!=lastFour[i]) ok = 1;
@@ -150,11 +148,29 @@ void handlePassword(){
 	 }
 
 }
-void updateLastFour(int value){
+void updateLast(int value){
 	
 	for(int i =0 ;i< 3 ;i++){
 	 lastFour[i] =lastFour[i+1];
 	}
    lastFour[3] = value ;
 
+   for(int i =0 ;i< 7 ;i++){
+	 lastEight[i] =lastEight[i+1];
+	}
+   lastEight[7] = value ;
+}
+
+void handleChangePassword(){
+ 	 bool ok = 0;
+	 for(int i = 0 ;i<4 ;i++){
+	  if(changePassword[i]!=lastEight[i]) ok = 1;
+	 }
+	if(!ok){
+	  //Serial.print("Done");
+	  for(int i =0 ;i<4 ;i++){
+	    password[i]=lastEight[i+4];
+	   // Serial.print(password[i]);
+	  }
+	}
 }
